@@ -104,7 +104,10 @@ def IRR(R, N):
         the IRR
         
     '''
-    return R**(1 / N) - 1
+    if R > 0.:
+        return R**(1 / N) - 1
+    else:
+        return 0.
 
 
 ### Plot and visualize
