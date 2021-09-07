@@ -1,11 +1,11 @@
-#! /usr/bin/bash
+#!/usr/bin/bash
 
 yearly_interest_rate_list='0.014 0.015 0.016 0.017 0.018'
-loan_term_list='20.0 25.0 30.0 35.0 40.0'
+loan_term_list='20.0 25.0 30.0 35.0 40.0' # unit: year
 house_price=10000000.0
-loan_proportion=0.7
-price_after_loan_term=12000000.0
-payment_method='equal_total_payment'
+loan_proportion=0.7 # the proportion of house_price - down_payment
+price_after_loan_term=12000000.0 # the house price after the loan term
+payment_method='equal_total_payment' # Options are: 'equal_total_payment', 'equal_principal_payment'
 rent_per_month=30000.0
 
 python3 buy_vs_rent_and_invest.py \
