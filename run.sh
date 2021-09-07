@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 yearly_interest_rate_list='0.014 0.015 0.016 0.017 0.018'
 loan_term_list='20.0 25.0 30.0 35.0 40.0' # unit: year
