@@ -1,5 +1,7 @@
 # Buy a house or rent and invest?
 
+You can play around with the Colab notebook: https://colab.research.google.com/drive/1PyYj1XR7fEAQDsdtEufLjS522t6CbJbR?usp=sharing
+
 The purpose of this repo is to see if we don't buy but rent a house, how large the
 Internal Rate of Return (IRR) should be if we use the budget to invest to match the
 margin of buying a house after the loan term.
