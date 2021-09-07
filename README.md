@@ -30,7 +30,7 @@ Some plots will pop up showing the results.
 
 ## Examples
 
-![image](examples/loan_term_20.png)
+![image](examples/house_price_10000000_to_12000000_loan_0.7_rent_30000/loan_term_20.png)
 
 We can see if the yearly interest rate is 1.6%, we have to pay about $34000/month
 for a $10000000 house if the down payment is 30%. The total payment during the 20-year loan term is about
