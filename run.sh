@@ -7,6 +7,7 @@ loan_proportion=0.7 # the proportion of house_price - down_payment
 price_after_loan_term=12000000.0 # the house price after the loan term
 payment_method='equal_total_payment' # Options are: 'equal_total_payment', 'equal_principal_payment'
 rent_per_month=30000.0
+monthly_budget=80000.0
 
 python3 buy_vs_rent_and_invest.py \
   --yearly_interest_rate_list $yearly_interest_rate_list \
@@ -15,4 +16,5 @@ python3 buy_vs_rent_and_invest.py \
   --loan_proportion $loan_proportion \
   --price_after_loan_term $price_after_loan_term \
   --payment_method $payment_method \
-  --rent_per_month $rent_per_month
+  --rent_per_month $rent_per_month \
+  --monthly_budget $monthly_budget
