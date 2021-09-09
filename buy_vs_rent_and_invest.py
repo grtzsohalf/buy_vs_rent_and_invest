@@ -180,46 +180,76 @@ def plot_results(
     loan_term_list, 
     yearly_interest_rate_list,
     loan_dict,
-    total_payment_dict,
-    total_return_dict,
-    IRR_dict,
-    DCA_market_IRR_dict
+    case_1_total_payment_dict,
+    case_1_total_return_dict,
+    case_1_IRR_dict,
+    case_2_total_payment_dict,
+    case_2_total_return_dict,
+    case_2_DCA_market_IRR_dict,
 ):
     for loan_term in args.loan_term_list:
         x_list = [] 
         average_loan_per_month_list = []
-        total_payment_list = []
-        total_margin_list = []
-        IRR_list = []
-        DCA_market_IRR_list = []
+        case_1_total_payment_list = []
+        case_1_total_return_list = []
+        case_1_IRR_list = []
+        case_2_total_payment_list = []
+        case_2_total_return_list = []
+        case_2_DCA_market_IRR_list = []
         for yearly_interest_rate in args.yearly_interest_rate_list:
             x_list.append(yearly_interest_rate)
             average_loan_per_month_list.append(loan_dict[(yearly_interest_rate, loan_term)] / (loan_term * 12))
-            total_payment_list.append(total_payment_dict[(yearly_interest_rate, loan_term)])
-            total_margin_list.append(total_return_dict[(yearly_interest_rate, loan_term)] - total_payment_dict[(yearly_interest_rate, loan_term)])
-            IRR_list.append(IRR_dict[(yearly_interest_rate, loan_term)])
-            DCA_market_IRR_list.append(DCA_market_IRR_dict[(yearly_interest_rate, loan_term)])
+            case_1_total_payment_list.append(case_1_total_payment_dict[(yearly_interest_rate, loan_term)])
+            case_1_total_return_list.append(case_1_total_return_dict[(yearly_interest_rate, loan_term)])
+            case_1_IRR_list.append(case_1_IRR_dict[(yearly_interest_rate, loan_term)])
+            case_2_total_payment_list.append(case_2_total_payment_dict[(yearly_interest_rate, loan_term)])
+            case_2_total_return_list.append(case_2_total_return_dict[(yearly_interest_rate, loan_term)])
+            case_2_DCA_market_IRR_list.append(case_2_DCA_market_IRR_dict[(yearly_interest_rate, loan_term)])
         x_array = np.array(x_list)
         average_loan_per_month_array = np.array(average_loan_per_month_list)
-        total_payment_array = np.array(total_payment_list)
-        total_margin_array = np.array(total_margin_list)
-        IRR_array = np.array(IRR_list)
-        DCA_market_IRR_array = np.array(DCA_market_IRR_list)
+        case_1_total_payment_array = np.array(case_1_total_payment_list)
+        case_1_total_return_array = np.array(case_1_total_return_list)
+        case_1_IRR_array = np.array(case_1_IRR_list)
+        case_2_total_payment_array = np.array(case_2_total_payment_list)
+        case_2_total_return_array = np.array(case_2_total_return_list)
+        case_2_DCA_market_IRR_array = np.array(case_2_DCA_market_IRR_list)
 
-        fig, axs = plt.subplots(2, 2)
-        fig.suptitle(f'loan term = {loan_term} years')
-        axs[0, 0].plot(x_array, average_loan_per_month_array, 'ro')
-        axs[0, 0].set_title(f'average loan per month (loan term = {loan_term} years)')
-        axs[0, 1].plot(x_array, total_margin_array, 'ro')
-        axs[0, 1].set_title(f'total margin (loan term = {loan_term} years)')
-        axs[1, 0].plot(x_array, IRR_array, 'ro')
-        axs[1, 0].set_title(f'needed IRR (loan term = {loan_term} years)')
-        axs[1, 1].plot(x_array, DCA_market_IRR_array, 'ro')
-        axs[1, 1].set_title(f'needed market IRR (DCA) (loan term = {loan_term} years)')
+        fig, axs = plt.subplots(3, 3, figsize=(9, 9))
+        fig.suptitle(f'Loan term = {loan_term} years')
+        fontsize = 10
+        axs[0, 1].plot(x_array, average_loan_per_month_array, 'ro')
+        axs[0, 1].set_title(f'Average loan per month', fontsize=fontsize)
+        axs[1, 0].plot(x_array, case_1_total_payment_array, 'ro')
+        axs[1, 0].set_title(f'Case 1: total payment', fontsize=fontsize)
+        axs[1, 1].plot(x_array, case_1_total_return_array, 'ro')
+        axs[1, 1].set_title(f'Case 1: total return', fontsize=fontsize)
+        axs[1, 2].plot(x_array, case_1_IRR_array, 'ro')
+        axs[1, 2].set_title(f'Case 1: IRR', fontsize=fontsize)
+        axs[2, 0].plot(x_array, case_2_total_payment_array, 'ro')
+        axs[2, 0].set_title(f'Case 2: total payment', fontsize=fontsize)
+        axs[2, 1].plot(x_array, case_2_total_return_array, 'ro')
+        axs[2, 1].set_title(f'Case 2: total return', fontsize=fontsize)
+        axs[2, 2].plot(x_array, case_2_DCA_market_IRR_array, 'ro')
+        axs[2, 2].set_title(f'Case 2: DCA market IRR', fontsize=fontsize)
 
         for ax in axs.flat:
             ax.set(xlabel='yearly interest rate')
             # ax.label_outer()
+
+        left  = 0.125  # the left side of the subplots of the figure
+        right = 0.9    # the right side of the subplots of the figure
+        bottom = 0.1   # the bottom of the subplots of the figure
+        top = 0.9      # the top of the subplots of the figure
+        wspace = 0.2   # the amount of width reserved for blank space between subplots
+        hspace = 0.2   # the amount of height reserved for white space between subplots
+        plt.subplots_adjust(
+            left=left, 
+            bottom=bottom, 
+            right=right, 
+            top=top, 
+            wspace=wspace, 
+            hspace=hspace,
+        )
 
         fig.tight_layout()
         # plt.savefig(f'loan_term_{loan_term}.png')
@@ -237,10 +267,12 @@ if __name__ == '__main__':
 
     # Loan
     loan_dict = {}
-    total_payment_dict = {}
-    total_return_dict = {}
-    IRR_dict = {}
-    DCA_market_IRR_dict = {}
+    case_1_total_payment_dict = {}
+    case_1_total_return_dict = {}
+    case_1_IRR_dict = {}
+    case_2_total_payment_dict = {}
+    case_2_total_return_dict = {}
+    case_2_DCA_market_IRR_dict = {}
 
     for yearly_interest_rate in args.yearly_interest_rate_list:
         monthly_interest_rate = yearly_interest_rate / 12
@@ -261,16 +293,31 @@ if __name__ == '__main__':
             house_payment =  down_payment + principal_and_interest
             house_return = args.price_after_loan_term
 
-            # If we choose to rent and not buy a house,
-            # calculate the required Internal Rate of Return (IRR)
-            # to match the return of buying a house.
-            rent = args.rent_per_month * num_periods
-            IRR_dict[(yearly_interest_rate, loan_term)] = \
-                calc_IRR(house_return / (house_payment - rent), loan_term)
+            # Case 1:
+            # (1) We have no other investments if we buy a house.
+            # (2) The total budget for "paying the rent and investing" is the same 
+            # as the total payment of "buying a house and no other investments" 
+            # during the loan term period.
+            # (3) We only care about the required average Internal Rate of Return 
+            # (IRR) to match the return of buying a house if we choose to rent and 
+            # not buy a house, so how we get the budget or invest during the period 
+            # does not matter.
+            case_1_IRR_dict[(yearly_interest_rate, loan_term)] = \
+                calc_IRR(house_return / (house_payment - args.rent_per_month * num_periods), loan_term)
 
-            # For the case of Dollar Cost Averaging (DCA) and monthly budget
-            # To simplify the computation, we assume loan_per_month to be the
-            # average over the loan term
+            case_1_total_payment_dict[(yearly_interest_rate, loan_term)] = house_payment 
+            case_1_total_return_dict[(yearly_interest_rate, loan_term)] = house_return
+
+            # Case 2:
+            # (1) We have a fixed monthly budget in every month and use the Dollar 
+            # Cost Averaging (DCA) strategy to invest.
+            # (2) The monthly budget has to run out in a month and can only be used 
+            # to pay the loan/rent and invest. That is, after we pay the loan or rent, 
+            # all of the rest of budget is used to invest in every month.
+            # (3) In this scenario, we calculate how large the overall market IRR 
+            # should be for "rent and invest" to beat the total return of "buy and invest".
+            # (4) To simplify the computation, we assume loan_per_month to be the
+            # average over the loan term.
             invest_return, DCA_market_IRR = calc_DCA_market_IRR(
                 down_payment,
                 house_return, 
@@ -279,18 +326,22 @@ if __name__ == '__main__':
                 num_periods, 
                 args.monthly_budget,
             )
-            DCA_market_IRR_dict[(yearly_interest_rate, loan_term)] = DCA_market_IRR
+            case_2_DCA_market_IRR_dict[(yearly_interest_rate, loan_term)] = DCA_market_IRR
 
-            total_payment_dict[(yearly_interest_rate, loan_term)] = down_payment + args.monthly_budget * num_periods
-            total_return_dict[(yearly_interest_rate, loan_term)] = house_return + invest_return
+            case_2_total_payment_dict[(yearly_interest_rate, loan_term)] = \
+                down_payment + args.monthly_budget * num_periods
+            case_2_total_return_dict[(yearly_interest_rate, loan_term)] = \
+                house_return + invest_return
 
     ### Plot and visualize
     plot_results(
         args.loan_term_list, 
         args.yearly_interest_rate_list,
         loan_dict,
-        total_payment_dict,
-        total_return_dict,
-        IRR_dict,
-        DCA_market_IRR_dict,
+        case_1_total_payment_dict,
+        case_1_total_return_dict,
+        case_1_IRR_dict,
+        case_2_total_payment_dict,
+        case_2_total_return_dict,
+        case_2_DCA_market_IRR_dict,
     )
