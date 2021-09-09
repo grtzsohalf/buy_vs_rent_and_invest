@@ -21,7 +21,7 @@ def addParser():
                         help='unit: year')
     parser.add_argument('--house_price', type=float, default=10000000.0) 
     parser.add_argument('--loan_proportion', type=float, default=0.7)
-    parser.add_argument('--price_after_loan_term', type=float, default=12000000.0)
+    parser.add_argument('--house_price_increase_rate_in_5y', type=float, default=0.1)
 
     # Note: Suppose the loan is monthly paid
     parser.add_argument('--payment_method', type=str, default='equal_total_payment', 
@@ -41,10 +41,10 @@ def addParser():
     # principal + interest = A * (1 + i * (N + 1) / 2)
 
     ### Rent if we don't buy a house or we don't live in the house we bought
-    parser.add_argument('--rent_per_month', type=float, default=30000.0)
+    parser.add_argument('--rent_per_month', type=float, default=20000.0)
 
     ### For the case of Dollar Cost Averaging (DCA) and monthly budget
-    parser.add_argument('--monthly_budget', type=float, default=80000.0)
+    parser.add_argument('--monthly_budget', type=float, default=60000.0)
 
     return parser
 
@@ -291,7 +291,8 @@ if __name__ == '__main__':
             loan_dict[(yearly_interest_rate, loan_term)] = principal_and_interest
 
             house_payment =  down_payment + principal_and_interest
-            house_return = args.price_after_loan_term
+            house_return = args.house_price * \
+                ((1 + args.house_price_increase_rate_in_5y)**(loan_term / 5.))
 
             # Case 1:
             # (1) We have no other investments if we buy a house.
